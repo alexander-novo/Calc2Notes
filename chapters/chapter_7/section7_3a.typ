@@ -24,7 +24,7 @@
 
 // content
 == Trigonometric Substitutions
-
+=== Motivation
 #emph-block[
   7.3a Learning Objectives
   - I can understand the relationship between right triangles and substitutions.
@@ -166,6 +166,8 @@ And from this point we finish the problem similarly to before.
   This was a lot of writing, but I hope you found a method in here that makes sense, and you understand that there are multiple ways to do the following problems. We will try to just show you the streamlined version of this in future examples, but feel free to try other substitutions if you want the practice!
 ]
 
+=== Substitutions To Use
+
 The substitutions we will use (to avoid extra negatives) for this section will be
 #figure(table(
   columns: (auto, auto, auto, auto, auto),
@@ -211,6 +213,7 @@ The substitutions we will use (to avoid extra negatives) for this section will b
 
 Note: Most of the examples you will see in this class will have #inline_eq($b=1$, "b equals 1"), but the above formulas are given for completion.
 
+=== Indefinite Integrals
 Let's do some examples.
 #example[
   Evaluate #block_eq(
