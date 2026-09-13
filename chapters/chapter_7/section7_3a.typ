@@ -241,7 +241,8 @@ Let's do some examples.
   Lastly, the question was in #acc("x"), not #acc("theta"). So we need something to replace #inline_eq($sec(theta)$, "secant theta") with. Looking back at our substitution, we have #block_eq($x=2tan(theta) arrow.double tan(theta)=x/2 = "opp"/"adj"$, "x equals 2 tangent theta implies tangent theta equals x over 2, which is opposite over adjacent") lets us build the triangle below.
   // todo triangle
 
-  So we can see that #block_eq($sec(theta)="hyp"/"adj" = sqrt(4+x^2)/2$, "secant theta equals hypotenuse over adjacent which is square root of 4 plus x squared all over 2."). Finally the antiderivative is
+  So we can see that #block_eq($sec(theta)="hyp"/"adj" = sqrt(4+x^2)/2.$, "secant theta equals hypotenuse over adjacent which is square root of 4 plus x squared all over 2.")
+  Finally the antiderivative is
   #block_eq(
     $integral (x^3)/(sqrt(4+x^2)) dif x & = 8 [(sec^3(theta))/3-sec(theta)] \
     & = 8 [1/3(sqrt(4+x^2)/2)^3-sqrt(4+x^2)/2] + C$,
@@ -249,6 +250,108 @@ Let's do some examples.
   )
 ]
 
+#note-block[
+  That was a really long problem. We can shorten some of the substitutions using the triangle at the end a bit sooner. Here is another way to solve the same problem:
+]
+
+
+#my-solution-block[
+  We see a weird root in the integral, so we know to try a trig sub. In this case, the form is #inline_eq($sqrt(4+x^2) arrow.squiggly sqrt(a^2+b^2x^2)$, "square root of 4 plus x squared is like the square root of a squared plus b squared x squared") where #inline_eq($a=2 " and " b=1$, "a equals 2 and b equals 1"). Then, in this form the substitution we use is #block_eq(
+    $x & =a/b tan (theta) \
+    x & = 2 tan(theta) \
+    dif x & = 2 sec^2(theta) dif theta$,
+    " x equals a over b tangent of theta, or 2 tangent of theta. Then d x equals 2 secant squared theta d theta",
+  )
+  Further, we have #block_eq($x=2tan(theta) arrow.double tan(theta)=x/2 = "opp"/"adj"$, "x equals 2 tangent theta implies tangent theta equals x over 2, which is opposite over adjacent") lets us build the triangle below
+  // todo triangle
+  Then, we can see that the square root term in our integral can be quickly replaced by a trig function:
+  #block_eq(
+    $sec(theta)=sqrt(4+x^2)/2arrow.double sqrt(4+x^2 = 2 sec(theta))$,
+    "secant of theta equals square root of 4 plus x squared over 2 thus the squre root of 4 plus x squared is just 2 secant theta.",
+  )
+
+  This substitution gives us
+  #block_eq(
+    $
+      integral (x^3)/(sqrt(4+x^2)) dif x & = integral ((2 tan(theta))^3)/(2sec(theta)) 2 sec^2(theta) dif theta \
+                                         & = 8 integral tan^3(theta) sec(theta) dif theta ," for "-pi/2<theta<pi/2 \
+    $,
+    "integral of x cubed over square root of 4 plus x squared d x equals the cube of 2 times tangent theta all over 2 secant of theta this whole fraction is then multiplied by 2 secant squared theta d theta. This becomes 8 times the integral of tangent cubed theta times secant theta for theta between negative pi over 2 and pi over 2.",
+  )
+  Now we have converted the integral into a trigonometric integral that we can solve using methods from Section 7.2.
+  //todo reference 7.2?
+  Now, we keep one factor of #inline_eq($tan(theta)sec(theta)$, "tangent theta times secant theta") and rewrite everything else in terms of #inline_eq($sec(theta)$, "secant theta").
+  #block_eq(
+    $
+      integral (x^3)/(sqrt(4+x^2)) dif x & = 8 integral tan^2(theta) tan(theta) sec(theta) dif theta \
+                                         & = 8 integral (sec^2(theta)-1) tan(theta) sec(theta) dif theta \
+    $,
+    "integral of x cubed over square root of 4 plus x squared d x equals 8 integral of tangent squared theta times tangent theta secant theta d theta. This becomes 8 integral secant squared theta minus 1 times tangent theta secant theta d theta.",
+  )
+  Now we have converted the trig integral into one we can solve with a #acc("u")-sub where #inline_eq($u=sec(theta)$, "u equals secant theta") so #inline_eq($dif u = sec(theta)tan(theta)dif theta$, "d u equals secant theta tangent theta d theta."). Thus,
+  #block_eq(
+    $
+      integral (x^3)/(sqrt(4+x^2)) dif x & = 8 integral (sec^2(theta)-1) tan(theta) sec(theta) dif theta \
+                                         & = 8 integral u^2-1 dif u \
+                                         & = 8[(u^3)/3-u] \
+                                         & = 8 [(sec^3(theta))/3-sec(theta)]
+    $,
+    "integral of x cubed over square root of 4 plus x squared d x equals 8 integral secant squared theta minus 1 times tangent theta secant theta d theta. This becomes 8 times the integral of u squared minus 1 d u. This becomes 8 times the quantity u cubed over 3 minus u. This becomes 8 times the quantity secant cubed of theta over three minus secant of theta.",
+  )
+  Lastly, the question was in #acc("x"), not #acc("theta"). So we need something to replace #inline_eq($sec(theta)$, "secant theta") with. Looking back at our triangle, we can see that #block_eq($sec(theta)="hyp"/"adj" = sqrt(4+x^2)/2.$, "secant theta equals hypotenuse over adjacent which is square root of 4 plus x squared all over 2.")
+  Finally the antiderivative is
+  #block_eq(
+    $integral (x^3)/(sqrt(4+x^2)) dif x & = 8 [(sec^3(theta))/3-sec(theta)] \
+    & = 8 [1/3(sqrt(4+x^2)/2)^3-sqrt(4+x^2)/2] + C$,
+    "integral of x cubed over square root of 4 plus x squared d x equals 8 times the quantity secant cubed of theta over three minus secant of theta. This becomes 8 times the quantity square root of 4 plus x squared over 2 cubed over three minus square root of 4 plus x squared over 2.",
+  )
+]
+
+#note-block[
+  A lot of the steps are the same, use whichever method above you prefer when solving these, but always draw the triangle as part of your work.
+]
+
+#example[
+  Evaluate
+  #block_eq(
+    $
+      integral (sqrt(9-x^2))/(x^2) dif x
+    $,
+    "integral of square root of 9 minus x squared all over x squared d x.",
+  )
+]
+
+#my-solution-block[
+  The form of the root in this problem is #inline_eq($sqrt(9-x^2) arrow.squiggly sqrt(a^2-b^2x^2)$, "square root of 9 minus x squared is like square root of a squared minus b squared x squared."). So, we know that we need to use the substitution
+  #block_eq(
+    $
+          x & = a/b sin(theta) \
+            & = 3 sin(theta) \
+      dif x & = 3 cos(theta) dif theta
+    $,
+    "x equals a over b sine of theta which is 3 sine theta. Then d x is 3 cosine theta d theta.",
+  )
+  The triangle is then // todo triangle ex 2
+
+  So, the square root part of the integral becomes #inline_eq($sqrt(9-x^2)=3 cos(theta)$, "square root of 9 minus x squared equals 3 cosine theta"). The substitution gives us
+  #block_eq(
+    $
+      integral (sqrt(9-x^2))/(x^2) dif x & = integral (3 cos(theta))/(3 sin(theta))^2 3 cos(theta) dif theta \
+                                         & = integral cot^2(theta) dif theta
+    $,
+    "integral of square root of 9 minus x squared all over x squared d x equals the integral of 3 cosine theta over the square of 3 sine theta all times 3 cosine theta d theta. This becomes the integral of cotangent squared theta d theta.",
+  )
+  Now we can try solving this.
+  #block_eq(
+    $
+      integral cot^2(theta) dif theta & = integral csc^2(theta) - 1 dif theta \
+                                      & = integral csc^2(theta) dif theta - integral 1 dif theta \
+                                      & = -cot(theta) - theta
+    $,
+    "integral of cotangent squared theta d theta equals the integral of cosecant squared theta minus 1 d theta. This becomesthe integral of cosecant squared theta d theta minus the integral of 1 d theta. This becomes negative cotangent theta minus theta.",
+  )
+  Lastly, we need to get back to #acc("x") for the final answer. Using the triangle from before we
+]
 
 
 
