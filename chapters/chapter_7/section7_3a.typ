@@ -31,14 +31,19 @@
   - I can draw triangles to represent substitutions.
   - I can understand when and how to use trigonometric substitutions.
 ]
-Suppose we want to derive the formula for area of a circle or radius #acc("r"). We know how to set up the integral for this using area between curves:
+Suppose we want to derive the formula for area of a circle or radius #acc("r").
+#figure(image(
+  "figures/trigintegralmotivation.svg",
+  alt: "sketch of a graph of a circle with radius r. A right triangle in the first quadrant has been draw in with angle theta between the hypotenuse and x axis and x and y labeled.",
+))
+We know how to set up the integral for this using area between curves:
 
 #block_eq(
   $A & = integral_(-r)^r underbrace(sqrt(r^2-x^2), "top")-underbrace((-sqrt(r^2-x^2)), "bottom") dif x \
   & = 2 integral_(-r)^r sqrt(r^2-x^2) dif x$,
   "A equals integral from negative r to r of square root of r squared minus x squared minus the negative square root of r squared minus x squared d x. This equals 2 times the integral from minus r to r of square root of r squared minus x squared d x",
 )
-// todo circle picture with triangle
+
 Up until now, we don't have a method to evaluate this integral. Looking at a point on the circle we can use trig functions to rewrite the expressions in #acc("x") and #acc("y") into #acc("r") and #acc("theta"). We have a few options, so let's do both and compare.
 
 #figure(table(
@@ -106,7 +111,11 @@ Up until now, we don't have a method to evaluate this integral. Looking at a poi
 ))
 
 For #inline_eq($x=r sin(theta)$, "x equals r sine theta") we get #inline_eq($dif x = r cos(theta) dif theta$, "d x equals r cosine theta d theta"). We have to solve little equations for #acc("theta") to get our new bounds.
-// todo bounds
+#block_eq(
+  $-r & = r sin(theta) arrow.double theta = pi\
+  r &= r sin(theta) arrow.double theta = 0$,
+  "if negative r equals r sine theta then theta equals pi. Also, if r equals r sine theta then theta equals 0.",
+)
 Then the integral becomes
 #block_eq(
   $A & = 2 integral_(-r)^r sqrt(r^2-x^2) dif x \
@@ -170,7 +179,10 @@ The substitutions we will use (to avoid extra negatives) for this section will b
     $0lt.eq theta lt pi/2,\ pi/2 lt theta lt.eq pi$,
     "0 is less than or equal to theta is less than pi over 2 or pi over two is less then theta is less than or equal to pi.",
   ),
-  [#image("figures/73triangle1.svg", alt: "blah")],
+  [#image(
+    "figures/73triangle1.svg",
+    alt: "right triangle with base angle theta, adjacent side a, opposite side square root of b squared x squared minus a squared, and hypotenuse b x.",
+  )],
   // row break
   block_eq($sqrt(a^2-b^2x^2)$, "square root of a squared minus b squared x squared"),
   block_eq($1-sin^2(theta)=cos^2(theta)$, "1 minus sine squared theta equals cosine squared theta"),
@@ -179,7 +191,10 @@ The substitutions we will use (to avoid extra negatives) for this section will b
     $-pi/2 lt.eq theta lt.eq pi/2$,
     "negative pi over 2 is less than or equal to theta is less than or equal to pi over 2.",
   ),
-  [#image("figures/73triangle2.svg", alt: "blah")],
+  [#image(
+    "figures/73triangle2.svg",
+    alt: "right triangle with base angle theta, adjacent side square root of a squared minus b squared x squared, opposite side bx, and hypotenuse a.",
+  )],
   // row break
   block_eq($sqrt(a^2+b^2x^2)$, "square root of a squared plus b squared x squared"),
   block_eq($tan^2(theta)+1=sec^2(theta)$, "tangent squared theta plus 1 equals secant squared theta."),
@@ -188,7 +203,10 @@ The substitutions we will use (to avoid extra negatives) for this section will b
     $-pi/2 lt theta lt pi/2$,
     "negative pi over 2 is less than theta is less than pi over 2.",
   ),
-  [#image("figures/73triangle3.svg", alt: "blah")],
+  [#image(
+    "figures/73triangle3.svg",
+    alt: "right triangle with base angle theta, adjacent side a, opposite side b x and hypotenuse square root of a squared plus b squared x squared.",
+  )],
 ))
 
 Note: Most of the examples you will see in this class will have #inline_eq($b=1$, "b equals 1"), but the above formulas are given for completion.
@@ -240,8 +258,10 @@ Let's do some examples.
   )
   Lastly, the question was in #acc("x"), not #acc("theta"). So we need something to replace #inline_eq($sec(theta)$, "secant theta") with. Looking back at our substitution, we have #block_eq($x=2tan(theta) arrow.double tan(theta)=x/2 = "opp"/"adj"$, "x equals 2 tangent theta implies tangent theta equals x over 2, which is opposite over adjacent") lets us build the triangle below.
 
-  // todo triangle
-  #figure(image("figures/73triangleexample1.svg", alt: "blah"))
+  #figure(image(
+    "figures/73triangleexample1.svg",
+    alt: "right triangle with base angle theta, adjacent side 2, opposite side x and hypotenuse square root of 4 plus x squared.",
+  ))
 
   So we can see that #block_eq($sec(theta)="hyp"/"adj" = sqrt(4+x^2)/2.$, "secant theta equals hypotenuse over adjacent which is square root of 4 plus x squared all over 2.")
   Finally the antiderivative is
@@ -265,7 +285,10 @@ Let's do some examples.
     " x equals a over b tangent of theta, or 2 tangent of theta. Then d x equals 2 secant squared theta d theta",
   )
   Further, we have #block_eq($x=2tan(theta) arrow.double tan(theta)=x/2 = "opp"/"adj"$, "x equals 2 tangent theta implies tangent theta equals x over 2, which is opposite over adjacent") lets us build the triangle below
-  // todo triangle
+  #figure(image(
+    "figures/73triangleexample1.svg",
+    alt: "right triangle with base angle theta, adjacent side 2, opposite side x and hypotenuse square root of 4 plus x squared.",
+  ))
   Then, we can see that the square root term in our integral can be quickly replaced by a trig function:
   #block_eq(
     $sec(theta)=sqrt(4+x^2)/2arrow.double sqrt(4+x^2 = 2 sec(theta))$,
@@ -333,7 +356,11 @@ Let's do some examples.
     $,
     "x equals a over b sine of theta which is 3 sine theta. Then d x is 3 cosine theta d theta.",
   )
-  The triangle is then // todo triangle ex 2
+  The triangle is then
+  #figure(image(
+    "figures/73triangleexample2.svg",
+    alt: "right triangle with base angle theta, adjacent side square root of 9 minus x squared, opposite side x and hypotenuse 3.",
+  ))
 
   So, the square root part of the integral becomes #inline_eq($sqrt(9-x^2)=3 cos(theta)$, "square root of 9 minus x squared equals 3 cosine theta"). The substitution gives us
   #block_eq(
@@ -352,7 +379,21 @@ Let's do some examples.
     $,
     "integral of cotangent squared theta d theta equals the integral of cosecant squared theta minus 1 d theta. This becomesthe integral of cosecant squared theta d theta minus the integral of 1 d theta. This becomes negative cotangent theta minus theta.",
   )
-  Lastly, we need to get back to #acc("x") for the final answer. Using the triangle from before we
+  Lastly, we need to get back to #acc("x") for the final answer. Using the triangle from before we can see
+  #block_eq(
+    $cot(theta) = "adj"/"opp" = sqrt(9-x^2)/x$,
+    "cotangent theta equals adjacent over opposite is square root of 9 minus x squared all over x.",
+  )
+  and (using any trig function, we just picked sine because we like sine/cosine and it gives a simple expression without a root)
+  #block_eq(
+    $sin(theta) = x/3 arrow.double theta = arcsin(x/3)$,
+    "sine of theta equals x over 3 so theta is arc sine of x over 3.",
+  )
+  Thus, our final answer is
+  #block_eq(
+    $integral sqrt(9-x^2)/x^2 dif x = -sqrt(9 - x^2)/x - arcsin(x/3).$,
+    "integral of square root of 9 minus x squared over x squared d x equals negative square root of 9 minus x squared all over x minus arc sine of x over 3.",
+  )
 ]
 
 

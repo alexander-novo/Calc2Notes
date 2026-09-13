@@ -1,0 +1,49 @@
+\documentclass[convert={svg,command=\unexpanded{{inkscape\space --pdf-poppler\space --export-type="svg"\space --pages=1\space -o\space \outfile\space \infile}}}]{standalone}% 'crop' is the default for v1.0, before it was 'preview'
+
+\include{../../plot_settings.tex}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\begin{tikzpicture}[
+		area plot/.style={
+				fill opacity=0.2,
+				draw=black,
+				fill=orange,
+				mark=none,
+				draw opacity = 1,
+			}, % sets up the orange slice fill in stuff
+	]
+	\begin{axis}[
+			twoDaxis,
+			xmin = -3,
+			xmax = 3,
+			minor tick num = 1,
+			xtick = {-2,2},
+			xticklabels = {{$-r$     },{     $r$}},
+			ytick=\empty,
+			ymin = -3,
+			ymax =  3,
+		]
+		\addplot [black,domain=-2:2,samples = 200, samples y=0,thick, name path = circle] {sqrt(4-(x)^2)} node [midway, above] {$\sqrt{r^2-x^2}$};
+		\addplot [black,domain=-2:2,samples = 200, samples y=0,thick, name path = circleBot] {-sqrt(4-(x)^2)} node [midway, below] {$-\sqrt{r^2-x^2}$};
+		\addplot [black,domain=0:1,samples = 2, blue, thick] {1.7320508075*x} node [pos =0.5, above left] {$r$};
+		\addplot [black,domain=0:1,samples = 2, blue, thick] {0} node [pos =0.5, below] {$x$};
+		\addplot [black,domain=0:1,samples = 2, blue, thick] coordinates {(1, 0) (1, 1.7320508075)} node [pos = 0.5, right] {$y$};
+		\draw (0.2,0) arc (0:60:0.2);
+		\node at (0.3,0.2) {$\theta$};
+		% \addplot [black, dashed, thick, domain = 0:8, name path = three, samples = 2, thick] {3};
+		% \addplot [black,domain=8:11,samples = 200, samples y=0,thick, name path = triangle] {-x+11};
+		% \addplot [draw = none, domain = 0:11, name path = floor, samples = 2] {0};
+		% \addplot[pattern = {Lines[angle=45,distance=8pt,line width=.4pt]}] fill between [of=circle and three, soft clip={domain=0:8}];
+		% \node at (4,5) [fill = white, fill opacity = .9, text opacity = 1] {$A_1$};
+		% \addplot[blue, opacity = 0.3] fill between [of=three and floor, soft clip={domain=0:8}];
+		% \addplot[dashed,thick] coordinates {(8,0) (8,3)};
+		% \node at (4,1.5) [fill = white, fill opacity = .9, text opacity = 1] {$A_2$};
+		% \addplot[pattern = {Lines[angle=45,distance=8pt,line width=.4pt]}] fill between [of=triangle and floor, soft clip={domain=8:11}];
+		% \node at (9,1) [fill = white, fill opacity = .9, text opacity = 1] {$A_3$};
+	\end{axis}
+\end{tikzpicture}
+\end{document}
