@@ -7,7 +7,8 @@ main_notes.html:
 htmls: chapters/chapter_5/section5_2.html chapters/chapter_5/section5_5.html chapters/chapter_6/section6_1.html 
 htmls: chapters/chapter_6/section6_2a.html chapters/chapter_6/section6_2b.html chapters/chapter_6/section6_3.html
 htmls: chapters/chapter_6/section6_4a.html chapters/chapter_6/section6_4b.html chapters/chapter_6/section6_5.html
-htmls: chapters/chapter_7/section7_1a.html chapters/chapter_7/section7_1b.html
+htmls: chapters/chapter_7/section7_1a.html chapters/chapter_7/section7_1b.html chapters/chapter_7/section7_2.html
+htmls: chapters/chapter_7/section7_3a.html
 
 %.html: %.typ
 	typst compile $*.typ --format html --features html --root ../.. --input html-frames=true --input individualchs=true
@@ -15,7 +16,8 @@ htmls: chapters/chapter_7/section7_1a.html chapters/chapter_7/section7_1b.html
 pdfs: chapters/chapter_5/section5_2.pdf chapters/chapter_5/section5_5.pdf chapters/chapter_6/section6_1.pdf 
 pdfs: chapters/chapter_6/section6_2a.pdf chapters/chapter_6/section6_2b.pdf chapters/chapter_6/section6_3.pdf
 pdfs: chapters/chapter_6/section6_4a.pdf chapters/chapter_6/section6_4b.pdf chapters/chapter_6/section6_5.pdf
-pdfs: chapters/chapter_7/section7_1a.pdf chapters/chapter_7/section7_1b.pdf
+pdfs: chapters/chapter_7/section7_1a.pdf chapters/chapter_7/section7_1b.pdf chapters/chapter_7/section7_2.pdf
+pdfs: chapters/chapter_7/section7_3a.pdf 
 
 %.pdf: %.typ
 	typst compile $*.typ --pdf-standard ua-1 --root ../.. --input individualchs=true
