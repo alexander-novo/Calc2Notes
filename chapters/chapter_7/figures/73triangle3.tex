@@ -1,0 +1,13 @@
+\documentclass[convert={svg,command=\unexpanded{{inkscape\space --pdf-poppler\space --export-type="svg"\space --pages=1\space -o\space \outfile\space \infile}}}]{standalone}% 'crop' is the default for v1.0, before it was 'preview'
+
+\include{../../plot_settings.tex}
+
+\usetikzlibrary{decorations.text, decorations.pathmorphing, topaths} 
+
+
+\begin{document}
+\begin{tikzpicture}
+	\draw (0,0) -- (2,0) node [pos=0.5,below] {$a$} -- (2,2) node [pos=0.5,right] {$bx$} -- cycle node [pos=0.5, above left] {$\sqrt{a^2+b^2x^2}$};
+	\draw (0.5,0) arc (0:45:0.5) node [pos=0.3,above right] {$\theta$};
+\end{tikzpicture}
+\end{document}

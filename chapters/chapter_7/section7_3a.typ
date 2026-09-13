@@ -170,7 +170,7 @@ The substitutions we will use (to avoid extra negatives) for this section will b
     $0lt.eq theta lt pi/2,\ pi/2 lt theta lt.eq pi$,
     "0 is less than or equal to theta is less than pi over 2 or pi over two is less then theta is less than or equal to pi.",
   ),
-  [],
+  [#image("figures/73triangle1.svg", alt: "blah")],
   // row break
   block_eq($sqrt(a^2-b^2x^2)$, "square root of a squared minus b squared x squared"),
   block_eq($1-sin^2(theta)=cos^2(theta)$, "1 minus sine squared theta equals cosine squared theta"),
@@ -179,7 +179,7 @@ The substitutions we will use (to avoid extra negatives) for this section will b
     $-pi/2 lt.eq theta lt.eq pi/2$,
     "negative pi over 2 is less than or equal to theta is less than or equal to pi over 2.",
   ),
-  [],
+  [#image("figures/73triangle2.svg", alt: "blah")],
   // row break
   block_eq($sqrt(a^2+b^2x^2)$, "square root of a squared plus b squared x squared"),
   block_eq($tan^2(theta)+1=sec^2(theta)$, "tangent squared theta plus 1 equals secant squared theta."),
@@ -188,7 +188,7 @@ The substitutions we will use (to avoid extra negatives) for this section will b
     $-pi/2 lt theta lt pi/2$,
     "negative pi over 2 is less than theta is less than pi over 2.",
   ),
-  [],
+  [#image("figures/73triangle3.svg", alt: "blah")],
 ))
 
 Note: Most of the examples you will see in this class will have #inline_eq($b=1$, "b equals 1"), but the above formulas are given for completion.
@@ -239,7 +239,9 @@ Let's do some examples.
     "integral of x cubed over square root of 4 plus x squared d x equals 8 integral secant squared theta minus 1 times tangent theta secant theta d theta. This becomes 8 times the integral of u squared minus 1 d u. This becomes 8 times the quantity u cubed over 3 minus u. This becomes 8 times the quantity secant cubed of theta over three minus secant of theta.",
   )
   Lastly, the question was in #acc("x"), not #acc("theta"). So we need something to replace #inline_eq($sec(theta)$, "secant theta") with. Looking back at our substitution, we have #block_eq($x=2tan(theta) arrow.double tan(theta)=x/2 = "opp"/"adj"$, "x equals 2 tangent theta implies tangent theta equals x over 2, which is opposite over adjacent") lets us build the triangle below.
+
   // todo triangle
+  #figure(image("figures/73triangleexample1.svg", alt: "blah"))
 
   So we can see that #block_eq($sec(theta)="hyp"/"adj" = sqrt(4+x^2)/2$, "secant theta equals hypotenuse over adjacent which is square root of 4 plus x squared all over 2."). Finally the antiderivative is
   #block_eq(
