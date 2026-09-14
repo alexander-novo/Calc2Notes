@@ -284,6 +284,8 @@
           alt += " to the power of "
           alt += get-alt(body.t)
         }
+      } else if body.has("b") {
+        alt += " sub " + get-alt(body.b)
       }
     }
 
