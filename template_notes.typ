@@ -196,7 +196,123 @@
   )
 }
 
+#let sequence = [a #"test"].func()
+#let test-symbol = $=$.body.func()
+#let styled = $bold(A)$.body.func()
 
+#let warn(body) = {
+  let my-message = [#(label(repr(body)))]
+}
+
+#let get-alt(body, use-alt: true) = {
+  if body.func() == math.equation {
+    if use-alt and body.has("alt") and body.alt != none {
+      body.alt
+    } else {
+      get-alt(body.body)
+    }
+  } else if body.func() == sequence {
+    let alt = ""
+    for (i, elem) in body.at("children").enumerate() {
+      let new-alt = get-alt(elem)
+      alt += new-alt
+      if i < body.at("children").len() - 1 and new-alt != none and new-alt.len() > 0 {
+        alt += " "
+      }
+    }
+    alt
+  } else if (body.func() == test-symbol) {
+    let text = body.at("text")
+    if text == "=" {
+      "equals"
+    } else if text == "+" {
+      "plus"
+    } else if text == "-" {
+      "minus"
+    } else if text == "≈" {
+      "approximately equals"
+    } else if text == "∫" {
+      "integral"
+    } else if text == "→" {
+      "goes to"
+    } else if text == "±" {
+      "plus or minus"
+    } else if text == "≥" {
+      "is greater than or equal to"
+    } else if text == "≤" {
+      "is less than or equal to"
+    } else {
+      text
+    }
+  } else if (body.func() == text) {
+    body.at("text")
+  } else if (body.func() == math.attach) {
+    let alt = get-alt(body.base)
+
+    if alt == "∑" {
+      alt = "sum"
+    }
+
+    if (alt == "integral" or alt == "sum") {
+      if (body.has("b") and body.has("t")) {
+        alt += " from " + get-alt(body.b) + " to " + get-alt(body.t)
+      }
+
+      alt += " of"
+    } else if alt == "lim of" {
+      alt = "limit"
+
+      if body.has("b") {
+        alt += " as " + get-alt(body.b)
+      }
+
+      alt += " of"
+    } else {
+      if (body.has("t")) {
+        if body.t.func() == test-symbol {
+          alt += get-alt(body.t)
+          if (body.has("b")) {
+            alt += " sub "
+            alt += get-alt(body.b)
+          }
+        } else {
+          if (body.has("b")) {
+            alt += " sub "
+            alt += get-alt(body.b)
+          }
+          // TODO: Make this more natural sounding for squared, cubed, etc.
+          alt += " to the power of "
+          alt += get-alt(body.t)
+        }
+      }
+    }
+
+    alt
+  } else if body.func() == math.lr {
+    get-alt(body.body)
+  } else if body.func() == math.op {
+    get-alt(body.text) + " of"
+  } else if body.func() == math.underbrace {
+    // TODO: No clue what to do about underbrace annotation content here
+    get-alt(body.body)
+  } else if body.func() == math.frac {
+    get-alt(body.num) + " over " + get-alt(body.denom)
+  } else if body.func() == math.class {
+    get-alt(body.body)
+  } else if (body.func() == styled) {
+    get-alt(body.child)
+  } else if body.func() == math.root {
+    (
+      if body.has("index") {
+        "root " + get-alt(body.index)
+      } else {
+        "square root"
+      }
+        + " of "
+        + get-alt(body.radicand)
+    )
+  }
+}
 
 // put under imports
 #let template = doc => {
@@ -206,6 +322,47 @@
   // Include styles.css in html output
   context {
     if target() == "html" { html.link(href: sys.inputs.at("root", default: "") + "styles.css", rel: "stylesheet") }
+  }
+  show math.equation: eq => {
+    let keystone = "askjdsajklfghuiedrhguj"
+
+    if eq.alt == keystone {
+      eq
+    } else {
+      let alt = get-alt(eq, use-alt: false)
+
+      // let new-eq = if eq.alt == none {
+      //   math.equation(
+      //     eq.body,
+      //     block: eq.block,
+      //     number-align: eq.number-align,
+      //     numbering: eq.numbering,
+      //     supplement: eq.supplement,
+      //     alt: alt,
+      //   )
+      // } else {
+      //   eq
+      // }
+
+      let new-eq = math.equation(
+        eq.body,
+        block: eq.block,
+        number-align: eq.number-align,
+        numbering: eq.numbering,
+        supplement: eq.supplement,
+        alt: keystone,
+      )
+
+      if eq.block {
+        [
+          #new-eq
+
+          #text(fill: red)[#alt]
+        ]
+      } else {
+        [#new-eq #text(fill: red)[(#alt)]]
+      }
+    }
   }
   doc
 }
