@@ -232,7 +232,7 @@
     } else if text == "≈" {
       "approximately equals"
     } else if text == "∫" {
-      "integral"
+      "integral of"
     } else if text == "→" {
       "goes to"
     } else if text == "±" {
@@ -251,9 +251,11 @@
 
     if alt == "∑" {
       alt = "sum"
+    } else if alt == "integral of" {
+      alt = "integral"
     }
 
-    if (alt == "integral" or alt == "sum") {
+    if (alt == "integral of" or alt == "sum") {
       if (body.has("b") and body.has("t")) {
         alt += " from " + get-alt(body.b) + " to " + get-alt(body.t)
       }
@@ -270,7 +272,15 @@
     } else {
       if (body.has("t")) {
         if body.t.func() == test-symbol {
-          alt += get-alt(body.t)
+          let new-alt = " " + get-alt(body.t)
+
+          if (new-alt == " *") {
+            new-alt = " star"
+          } else if (new-alt == " '") {
+            new-alt = " prime"
+          }
+
+          alt += new-alt
           if (body.has("b")) {
             alt += " sub "
             alt += get-alt(body.b)
@@ -286,6 +296,10 @@
         }
       } else if body.has("b") {
         alt += " sub " + get-alt(body.b)
+      }
+
+      if body.has("tr") {
+        alt += " " + get-alt(body.tr)
       }
     }
 
@@ -313,6 +327,15 @@
         + " of "
         + get-alt(body.radicand)
     )
+  } else if body.func() == math.primes {
+    let alt = ""
+    let i = 0
+    while i < body.count {
+      i = i + 1
+
+      alt += " prime"
+    }
+    alt
   }
 }
 
