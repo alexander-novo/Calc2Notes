@@ -32,7 +32,7 @@
 // content
 #emph-block[
   7.3b Learning Objectives
-  -
+  - I can properly handle the bounds on a trigonometric substitution problem.
 ]
 === Definite Integrals
 
@@ -186,6 +186,7 @@ We touched on it in our motivating example, but we have to be more careful with 
 
 #emph-block[
   7.3b Section Summary:
-  -
+  - We did a definite integral that needed a trig substitution.
+  - We used complete the square to evaluate a more complicated integral with a square root.
 ]
 
