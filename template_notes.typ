@@ -241,6 +241,12 @@
       "is greater than or equal to"
     } else if text == "≤" {
       "is less than or equal to"
+    } else if text == ">" {
+      "is greater than"
+    } else if text == "<" {
+      "is less than"
+    } else if text == "∞" {
+      "infinity"
     } else {
       text
     }
@@ -255,7 +261,7 @@
       alt = "integral"
     }
 
-    if (alt == "integral of" or alt == "sum") {
+    if (alt == "integral" or alt == "sum") {
       if (body.has("b") and body.has("t")) {
         alt += " from " + get-alt(body.b) + " to " + get-alt(body.t)
       }
@@ -269,15 +275,21 @@
       }
 
       alt += " of"
+    } else if alt.ends-with("|") and body.has("b") {
+      alt = alt.match(regex("(.*)\|$")).at("captures").at(0) + " evaluated "
+
+      if body.has("t") {
+        alt += " from " + get-alt(body.b) + " to " + get-alt(body.t)
+      } else {
+        alt += " at " + get-alt(body.b)
+      }
     } else {
       if (body.has("t")) {
         if body.t.func() == test-symbol {
           let new-alt = " " + get-alt(body.t)
 
-          if (new-alt == " *") {
+          if (new-alt == " ∗") {
             new-alt = " star"
-          } else if (new-alt == " '") {
-            new-alt = " prime"
           }
 
           alt += new-alt
@@ -290,9 +302,15 @@
             alt += " sub "
             alt += get-alt(body.b)
           }
-          // TODO: Make this more natural sounding for squared, cubed, etc.
-          alt += " to the power of "
-          alt += get-alt(body.t)
+          let temp = " to the power of " + get-alt(body.t)
+
+          alt += if temp == " to the power of 2" {
+            " squared"
+          } else if temp == " to the power of 3" {
+            " cubed"
+          } else {
+            temp
+          }
         }
       } else if body.has("b") {
         alt += " sub " + get-alt(body.b)
@@ -307,7 +325,23 @@
   } else if body.func() == math.lr {
     get-alt(body.body)
   } else if body.func() == math.op {
-    get-alt(body.text) + " of"
+    let temp = get-alt(body.text) + " of"
+
+    if temp == "sin of" {
+      "sine of"
+    } else if temp == "cos of" {
+      "cosine of"
+    } else if temp == "tan of" {
+      "tangent of"
+    } else if temp == "cot of" {
+      "cotangent of"
+    } else if temp == "sec of" {
+      "secant of"
+    } else if temp == "csc of" {
+      "cosecant of"
+    } else {
+      temp
+    }
   } else if body.func() == math.underbrace {
     // TODO: No clue what to do about underbrace annotation content here
     get-alt(body.body)
@@ -320,7 +354,14 @@
   } else if body.func() == math.root {
     (
       if body.has("index") {
-        "root " + get-alt(body.index)
+        let temp = "root " + get-alt(body.index)
+        if temp == "root 2" {
+          "square root"
+        } else if temp == "root 3" {
+          "cube root"
+        } else {
+          temp
+        }
       } else {
         "square root"
       }
