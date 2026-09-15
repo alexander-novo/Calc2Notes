@@ -4,6 +4,7 @@
 // theorem and example and definition blocks
 #import "@preview/theorion:0.6.0": *
 #import "@preview/frame-it:1.2.0": *
+#import "auto-alt.typ": *
 
 // don't import here, this is your menu lol
 // #import cosmos.simple: *
@@ -196,190 +197,6 @@
   )
 }
 
-#let sequence = [a #"test"].func()
-#let test-symbol = $=$.body.func()
-#let styled = $bold(A)$.body.func()
-
-#let warn(body) = {
-  let my-message = [#(label(repr(body)))]
-}
-
-#let get-alt(body, use-alt: true) = {
-  if body.func() == math.equation {
-    if use-alt and body.has("alt") and body.alt != none {
-      body.alt
-    } else {
-      get-alt(body.body)
-    }
-  } else if body.func() == sequence {
-    let alt = ""
-    for (i, elem) in body.at("children").enumerate() {
-      let new-alt = get-alt(elem)
-      alt += new-alt
-      if i < body.at("children").len() - 1 and new-alt != none and new-alt.len() > 0 {
-        alt += " "
-      }
-    }
-    alt
-  } else if (body.func() == test-symbol) {
-    let text = body.at("text")
-    if text == "=" {
-      "equals"
-    } else if text == "+" {
-      "plus"
-    } else if text == "-" {
-      "minus"
-    } else if text == "≈" {
-      "approximately equals"
-    } else if text == "∫" {
-      "integral of"
-    } else if text == "→" {
-      "goes to"
-    } else if text == "±" {
-      "plus or minus"
-    } else if text == "≥" {
-      "is greater than or equal to"
-    } else if text == "≤" {
-      "is less than or equal to"
-    } else if text == ">" {
-      "is greater than"
-    } else if text == "<" {
-      "is less than"
-    } else if text == "∞" {
-      "infinity"
-    } else {
-      text
-    }
-  } else if (body.func() == text) {
-    body.at("text")
-  } else if (body.func() == math.attach) {
-    let alt = get-alt(body.base)
-
-    if alt == "∑" {
-      alt = "sum"
-    } else if alt == "integral of" {
-      alt = "integral"
-    }
-
-    if (alt == "integral" or alt == "sum") {
-      if (body.has("b") and body.has("t")) {
-        alt += " from " + get-alt(body.b) + " to " + get-alt(body.t)
-      }
-
-      alt += " of"
-    } else if alt == "lim of" {
-      alt = "limit"
-
-      if body.has("b") {
-        alt += " as " + get-alt(body.b)
-      }
-
-      alt += " of"
-    } else if alt.ends-with("|") and body.has("b") {
-      alt = alt.match(regex("(.*)\|$")).at("captures").at(0) + " evaluated "
-
-      if body.has("t") {
-        alt += " from " + get-alt(body.b) + " to " + get-alt(body.t)
-      } else {
-        alt += " at " + get-alt(body.b)
-      }
-    } else {
-      if (body.has("t")) {
-        if body.t.func() == test-symbol {
-          let new-alt = " " + get-alt(body.t)
-
-          if (new-alt == " ∗") {
-            new-alt = " star"
-          }
-
-          alt += new-alt
-          if (body.has("b")) {
-            alt += " sub "
-            alt += get-alt(body.b)
-          }
-        } else {
-          if (body.has("b")) {
-            alt += " sub "
-            alt += get-alt(body.b)
-          }
-          let temp = " to the power of " + get-alt(body.t)
-
-          alt += if temp == " to the power of 2" {
-            " squared"
-          } else if temp == " to the power of 3" {
-            " cubed"
-          } else {
-            temp
-          }
-        }
-      } else if body.has("b") {
-        alt += " sub " + get-alt(body.b)
-      }
-
-      if body.has("tr") {
-        alt += " " + get-alt(body.tr)
-      }
-    }
-
-    alt
-  } else if body.func() == math.lr {
-    get-alt(body.body)
-  } else if body.func() == math.op {
-    let temp = get-alt(body.text) + " of"
-
-    if temp == "sin of" {
-      "sine of"
-    } else if temp == "cos of" {
-      "cosine of"
-    } else if temp == "tan of" {
-      "tangent of"
-    } else if temp == "cot of" {
-      "cotangent of"
-    } else if temp == "sec of" {
-      "secant of"
-    } else if temp == "csc of" {
-      "cosecant of"
-    } else {
-      temp
-    }
-  } else if body.func() == math.underbrace {
-    // TODO: No clue what to do about underbrace annotation content here
-    get-alt(body.body)
-  } else if body.func() == math.frac {
-    get-alt(body.num) + " over " + get-alt(body.denom)
-  } else if body.func() == math.class {
-    get-alt(body.body)
-  } else if (body.func() == styled) {
-    get-alt(body.child)
-  } else if body.func() == math.root {
-    (
-      if body.has("index") {
-        let temp = "root " + get-alt(body.index)
-        if temp == "root 2" {
-          "square root"
-        } else if temp == "root 3" {
-          "cube root"
-        } else {
-          temp
-        }
-      } else {
-        "square root"
-      }
-        + " of "
-        + get-alt(body.radicand)
-    )
-  } else if body.func() == math.primes {
-    let alt = ""
-    let i = 0
-    while i < body.count {
-      i = i + 1
-
-      alt += " prime"
-    }
-    alt
-  }
-}
-
 // put under imports
 #let template = doc => {
   context { set page(header: "Math 1226 Completed Notes") if target() == "paged" }
@@ -389,47 +206,12 @@
   context {
     if target() == "html" { html.link(href: sys.inputs.at("root", default: "") + "styles.css", rel: "stylesheet") }
   }
-  show math.equation: eq => {
-    let keystone = "askjdsajklfghuiedrhguj"
 
-    if eq.alt == keystone {
-      eq
-    } else {
-      let alt = get-alt(eq, use-alt: false)
+  // Automatically generate alt text for equations which are missing alt text
+  show: apply-auto-eq-alt
 
-      // let new-eq = if eq.alt == none {
-      //   math.equation(
-      //     eq.body,
-      //     block: eq.block,
-      //     number-align: eq.number-align,
-      //     numbering: eq.numbering,
-      //     supplement: eq.supplement,
-      //     alt: alt,
-      //   )
-      // } else {
-      //   eq
-      // }
-
-      let new-eq = math.equation(
-        eq.body,
-        block: eq.block,
-        number-align: eq.number-align,
-        numbering: eq.numbering,
-        supplement: eq.supplement,
-        alt: keystone,
-      )
-
-      if eq.block {
-        [
-          #new-eq
-
-          #text(fill: red)[#alt]
-        ]
-      } else {
-        [#new-eq #text(fill: red)[(#alt)]]
-      }
-    }
-  }
+  // Show alt text for equations on page
+  show: show-eq-alt
   doc
 }
 
