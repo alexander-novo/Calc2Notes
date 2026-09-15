@@ -204,7 +204,9 @@
   show: show-theorion
   show: frame-style(styles.boxy)
   // Include styles.css in html output
-  context { if target() == "html" { html.link(href: "styles.css", rel: "stylesheet") } }
+  context {
+    if target() == "html" { html.link(href: sys.inputs.at("root", default: "") + "styles.css", rel: "stylesheet") }
+  }
   doc
 }
 

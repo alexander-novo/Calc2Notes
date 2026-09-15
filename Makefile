@@ -11,7 +11,7 @@ htmls: chapters/chapter_7/section7_1a.html chapters/chapter_7/section7_1b.html c
 htmls: chapters/chapter_7/section7_3a.html chapters/chapter_7/section7_3b.html
 
 %.html: %.typ
-	typst compile $*.typ --format html --features html --root ../.. --input html-frames=true --input individualchs=true
+	typst compile $*.typ --format html --features html --root ../.. --input root=../../ --input html-frames=true --input individualchs=true
 
 pdfs: chapters/chapter_5/section5_2.pdf chapters/chapter_5/section5_5.pdf chapters/chapter_6/section6_1.pdf 
 pdfs: chapters/chapter_6/section6_2a.pdf chapters/chapter_6/section6_2b.pdf chapters/chapter_6/section6_3.pdf
