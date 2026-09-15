@@ -222,7 +222,7 @@ Here are some less obvious substitution problems.
   The antiderivative of #math.equation($1/u$, alt: "1 over u") is #math.equation($ln(u)$, alt: "natural log of u"). So,
   #math.equation(
     $
-      integral_0^(pi/16) sin(4x)/cos(4x) dif x & = [-1/4 ln|u|]_1^(sqrt(2)/2) \
+      integral_0^(pi/16) sin(4x)/cos(4x) dif x & = [-1/4 ln|u| ]_1^(sqrt(2)/2) \
                                                & = -1/4 ln(sqrt(2)/2)
     $,
     alt: "the integral from 0 to pi over 16 of sine of 4 x over cosine of 4 x, d x becomes negative one fourth times the natural log of the absolute value of u evaluated from 1 to root 2 over 2. which is negative one fourth times natural log of root 2 over 2",

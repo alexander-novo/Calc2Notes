@@ -113,7 +113,7 @@ Relabeling the last line with a few substitutions #math.equation($u=f(x) arrow.d
   #block_eq(
     $
       integral_0^1 x/(1+x^2) dif x & = 1/2 integral_1^2 1/w dif w \
-                                   & = 1/2 [ln|w|]_1^2 \
+                                   & = 1/2 [ln|w| ]_1^2 \
                                    & = 1/2 ln(2)
     $,
     "the integral from 0 to 1 of x over 1 plus x squared d x = one half times the integral from 1 to 2 of 1 over w d w. This is one half times natural log of absolute value of w evaluated from 1 to 2. Then this is one half times natural log of 2",
