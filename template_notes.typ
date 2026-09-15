@@ -203,6 +203,8 @@
   context { set page(header: "Math 1226 Completed Notes") if target() == "paged" }
   show: show-theorion
   show: frame-style(styles.boxy)
+  // Include styles.css in html output
+  context { if target() == "html" { html.link(href: "styles.css", rel: "stylesheet") } }
   doc
 }
 

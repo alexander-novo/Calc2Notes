@@ -1,7 +1,7 @@
 main_notes.pdf:
 	typst compile main_notes.typ --pdf-standard ua-1 --deps test.dep --deps-format make
 
-main_notes.html:
+main_notes.html: main_notes.typ
 	typst compile main_notes.typ --format html --features html --input html-frames=true
 
 htmls: chapters/chapter_5/section5_2.html chapters/chapter_5/section5_5.html chapters/chapter_6/section6_1.html 
